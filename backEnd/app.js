@@ -1,0 +1,19 @@
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const studentRoutes = require("./Routes/studentRoutes");
+const teacherRoutes = require("./Routes/teacherRoutes");
+
+const app = express();
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.use("/teacher", teacherRoutes);
+app.use("/student", studentRoutes);
+
+module.exports = app;
