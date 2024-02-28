@@ -5,7 +5,7 @@ const TeacherNavbar = () => {
   return (
     <div>
       <div>
-        {/* hello "name of teacher" */}
+        <h1>Hello {/* name of logged in username */}</h1>
       </div>
       <div>
         <ul>
