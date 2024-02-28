@@ -10,6 +10,12 @@ exports.createLesson = async (req, res) => {
     const teacherId = req.body.teacherId;
     const teacher = await Teacher.findById(teacherId);
     const newLesson = await Lesson.create(req.body);
+    req.body.students.map(async (studentId) => {
+      const student = await Student.findById(studentId);
+      student.lessons.push(newLesson._id);
+      console.log(student);
+      await student.save();
+    });
     teacher.lessons.push(newLesson);
     await teacher.save();
     res.json({ teacher, newLesson });

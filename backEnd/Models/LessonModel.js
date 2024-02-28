@@ -11,12 +11,12 @@ const LessonsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    start: {
-      type: String,
+    day: {
+      type: Number,
       required: true,
     },
-    end: {
-      type: String,
+    hour: {
+      type: Number,
       required: true,
     },
     place: {
