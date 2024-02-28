@@ -18,7 +18,7 @@ exports.handleLogin = async (req, res) => {
     console.log(req.body);
     const { username, password } = req.body;
     const student = await Student.findOne({ username })
-      .populate("leassons")
+      .populate("lessons")
       .exec();
     console.log("mydick", student);
     if (student && (await bcrypt.compare(password, student.password))) {
@@ -42,7 +42,7 @@ exports.handleLogin = async (req, res) => {
         role: student.role,
         password: student.password,
         token: token,
-        leassons: student.leassons,
+        lessons: student.lessons,
       });
     } else {
       res.status(401).json({ message: "Invalid credentials" });

@@ -6,5 +6,5 @@ newRoute
   .route("/")
   .post(studentController.handleLogin)
   .get(studentController.getStudents);
-
+newRoute.route("/logout").get(studentController.handleLogOut);
 module.exports = newRoute;

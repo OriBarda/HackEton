@@ -10,7 +10,8 @@ exports.createTeacher = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     console.log(hashedPassword);
-    const { username, email, role } = req.body;
+    const { username, email } = req.body;
+    const role = "teacher";
     const newTeacher = await Teacher.create({
       username,
       password: hashedPassword,
@@ -49,7 +50,7 @@ exports.handleLogin = async (req, res) => {
     const { username, password } = req.body;
     const teacher = await Teacher.findOne({ username })
       .populate("students")
-      .populate("leassons")
+      .populate("lessons")
       .exec();
     console.log(teacher);
     if (teacher && (await bcrypt.compare(password, teacher.password))) {
@@ -74,7 +75,7 @@ exports.handleLogin = async (req, res) => {
         password: teacher.password,
         token: token,
         students: teacher.students,
-        leassons: teacher.leassons,
+        lessons: teacher.lessons,
       });
     } else {
       res.status(401).json({ message: "Invalid credentials" });
@@ -135,7 +136,7 @@ exports.verifyToken = async (req, res, next) => {
     console.log(decodedToken);
     const teacher = await Teacher.findById(decodedToken._id)
       .populate("students")
-      .populate("leassons")
+      .populate("lessons")
       .exec();
     req.teacher = teacher;
     next();
