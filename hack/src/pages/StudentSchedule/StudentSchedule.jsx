@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StudentContext } from "../../Context/StudentContext";
+import { StudentContext } from "../Context/StudentContext";
 
 const StudentSchedule = () => {
   const { studentInfo } = useContext(StudentContext);
@@ -29,17 +29,20 @@ const StudentSchedule = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center pt-20">
-      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="max-w-screen-xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+        <h1 className="text-3xl font-bold mb-4 text-indigo-600">
+          Weekly Class Schedule
+        </h1>
         <div className="grid grid-cols-8 gap-4">
           <div className="col-span-1">
-            <div className="bg-indigo-600 text-white text-lg font-bold p-3 rounded-t-lg">
+            <div className="bg-indigo-600 text-white text-lg font-bold p-2 rounded-t-lg">
               Time
             </div>
             {classTimes.map((time, index) => (
               <div
                 key={index}
-                className="p-3 border border-indigo-600 border-t-0 bg-gray-200 text-gray-800 rounded-md"
+                className="p-2 border border-indigo-600 border-t-0 bg-gray-200 text-gray-800"
               >
                 {time.start} - {time.end}
               </div>
@@ -47,33 +50,25 @@ const StudentSchedule = () => {
           </div>
           <div className="col-span-7 grid grid-rows-7 gap-4">
             {days.map((day, dayIndex) => (
-              <div key={dayIndex} className="flex flex-col p-4 mb-4">
-                <div className="font-bold text-3xl text-indigo-900 mb-4 text-center">
+              <div
+                key={dayIndex}
+                className="flex flex-col bg-white rounded-md border border-gray-300 p-4"
+              >
+                <div className="font-semibold text-lg text-indigo-600 mb-2">
                   {day}
                 </div>
                 {studentLessons[dayIndex].map((cell, cellIndex) => (
                   <div
                     key={cellIndex}
-                    className={`p-4 rounded-xl my-2 font-bold text-xl ${
-                      cellIndex % 2 === 0
-                        ? "bg-gray-500 text-white hover:bg-gray-700 transition-all ease-in-out"
-                        : "bg-slate-300 text-black hover:bg-slate-500 transition-all ease-in-out"
+                    className={`p-2 rounded-lg my-1 ${
+                      cellIndex === 0
+                        ? "bg-indigo-200"
+                        : cell.subject
+                        ? "bg-indigo-400 text-white"
+                        : ""
                     }`}
                   >
-                    {cell.subject ? (
-                      <div className="flex flex-col space-y-2">
-                        <div className="font-bold text-lg">
-                          {cell.subject || "No Class"}
-                        </div>
-                        {cell.subject && (
-                          <div className="text-sm font-semibold text-gray-600">
-                            {cell.teacher} - {cell.place}
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      "-"
-                    )}
+                    {cell.subject ? `${cell.subject} - ${cell.teacher}` : "-"}
                   </div>
                 ))}
               </div>
