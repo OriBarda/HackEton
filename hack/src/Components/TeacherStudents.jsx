@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import { StudentContext } from '../../Context/StudentContext'
-import { TeacherContext } from '../../Context/TeacherContext'
+import { StudentContext } from '../Context/StudentContext'
+import { TeacherContext } from '../Context/TeacherContext'
 
 const TeacherStudents = () => {
     const { students, getStudents } = useContext(StudentContext)
