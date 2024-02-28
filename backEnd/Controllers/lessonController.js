@@ -20,7 +20,7 @@ exports.createLesson = async (req, res) => {
 
 exports.editLesson = async (req, res) => {
   try {
-    const lessonId = req.body.lessonId;
+    const lessonId = req.body._id;
     const { subject, start, end, place, students, teacherId } = req.body;
     const updatedLesson = { subject, start, end, place, students, teacherId };
     const lesson = await Lesson.findByIdAndUpdate(
