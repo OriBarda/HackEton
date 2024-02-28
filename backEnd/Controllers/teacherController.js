@@ -25,24 +25,6 @@ exports.createTeacher = async (req, res) => {
   }
 };
 
-exports.createStudent = async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-    console.log(hashedPassword);
-    const { username, email } = req.body;
-    const role = "student";
-    const newStudent = await Student.create({
-      username,
-      password: hashedPassword,
-      email,
-      role,
-    });
-    res.send(newStudent);
-  } catch (err) {
-    res.status(404).json({ message: "didnt create user" });
-  }
-};
-
 exports.handleLogin = async (req, res) => {
   try {
     console.log(req.body);
@@ -134,11 +116,16 @@ exports.verifyToken = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET);
     console.log(decodedToken);
+    const student = await Student.findById(decodedToken._id)
+      .populate("lessons")
+      .exec();
+    req.student = student;
     const teacher = await Teacher.findById(decodedToken._id)
       .populate("students")
       .populate("lessons")
       .exec();
     req.teacher = teacher;
+    console.log("req.teacher",req.student);
     next();
   } catch (e) { }
 };
