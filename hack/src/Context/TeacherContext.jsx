@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 const TeacherProvider = ({ children }) => {
   const [teacherInfo, setTeacherInfo] = useState();
 
-  const handleLogIn = async (teacher) => {
+  const handleLogInTeacher = async (teacher) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_FRONTEND}/teacher/login`,
@@ -67,7 +67,7 @@ const TeacherProvider = ({ children }) => {
     teacherInfo,
     setTeacherInfo,
     //a
-    handleLogIn,
+    handleLogInTeacher,
     handleLogOut,
     handleCreateStudent,
     handleDeleteTeacher,

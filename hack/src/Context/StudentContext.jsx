@@ -23,10 +23,10 @@ const StudentProvider = ({ children }) => {
     }
   };
 
-  const handleLogIn = async (student) => {
+  const handleLogInStudent = async (student) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_FRONTEND}/student/login`,
+        `${import.meta.env.VITE_FRONTEND}/student`,
         student
       );
       setStudentInfo(response.data);
@@ -54,7 +54,7 @@ const StudentProvider = ({ children }) => {
     studentInfo,
     setStudentInfo,
     //a
-    handleLogIn,
+    handleLogInStudent,
     handleLogOut,
     getStudents,
   };
