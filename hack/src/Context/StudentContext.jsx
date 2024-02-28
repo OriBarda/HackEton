@@ -30,18 +30,19 @@ const StudentProvider = ({ children }) => {
         student
       );
       setStudentInfo(response.data);
-      navigate("/student");
+      navigate("/student/schedule");
       console.log("hello world", response);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleLogOut = async (student) => {
+  const handleLogOutStudent = async () => {
     try {
       await axios.post(`${import.meta.env.VITE_FRONTEND}/student/logout`);
-      setStudentInfo();
+      setStudentInfo(null);
       navigate("/");
+      console.log("logged out");
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +56,7 @@ const StudentProvider = ({ children }) => {
     setStudentInfo,
     //a
     handleLogInStudent,
-    handleLogOut,
+    handleLogOutStudent,
     getStudents,
   };
 
