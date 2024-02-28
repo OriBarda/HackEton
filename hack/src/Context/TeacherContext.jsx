@@ -12,7 +12,7 @@ const TeacherProvider = ({ children }) => {
 
   const handleLogInTeacher = async (teacher) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_FRONTEND}/teacher/login`,
         teacher
       );
@@ -24,10 +24,11 @@ const TeacherProvider = ({ children }) => {
     }
   };
 
-  const handleLogOut = async () => {
+  const handleLogOutTeacher = async () => {
     try {
-      await axios.get(`${import.meta.env.VITE_FRONTEND}/teacher/logout`);
-      setTeacherInfo();
+      await axios.post(`${import.meta.env.VITE_FRONTEND}/teacher/logout`);
+      setTeacherInfo(null);
+      navigate("/")
       console.log("logged out");
     } catch (err) {
       console.log(err);
@@ -84,7 +85,7 @@ const TeacherProvider = ({ children }) => {
     setTeacherInfo,
     //a
     handleLogInTeacher,
-    handleLogOut,
+    handleLogOutTeacher,
     handleCreateTeacher,
     handleCreateStudent,
     handleDeleteTeacher,

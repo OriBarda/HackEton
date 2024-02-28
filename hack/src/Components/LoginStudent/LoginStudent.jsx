@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { StudentContext } from '../../Context/StudentContext'
+
 const LoginStudent = () => {
-
-
     const { handleLogInStudent } = useContext(StudentContext);
 
     const [user, setUser] = useState({
@@ -21,19 +20,19 @@ const LoginStudent = () => {
     }
 
     return (
-        <div>
-            <div>
-                <h1>
+        <div className='h-full space-y-28 bg-gradient-to-b from-secondary border-solid border-2 p-4 rounded-xl flex-col flex items-center justify-center content-center'>
+            <div className='flex flex-col space-y-10 items-center justify-center content-center '>
+                <h1 className='text-6xl'>
                     Welcome student!
                 </h1>
-                <h2>
+                <h1 className='text-3xl'>
                     Please login to your account
-                </h2>
+                </h1>
             </div>
-            <div>
-                <form onSubmit={handleSubmit}>
+            <div className='flex justify-center items-center content-center flex-col space-y-16'>
+                <form onSubmit={handleSubmit} className='flex justify-center items-center content-center flex-col space-y-10'>
                     <div>
-                        <label >
+                        <label>
                             Username:
                         </label>
                         <input
@@ -42,10 +41,11 @@ const LoginStudent = () => {
                             value={user.username}
                             onChange={(e) => setUser({ ...user, username: e.target.value })}
                             required={true}
+                            className='rounded-lg bg-background'
                         />
                     </div>
                     <div>
-                        <label >
+                        <label>
                             Password:
                         </label>
                         <input
@@ -54,18 +54,21 @@ const LoginStudent = () => {
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}
                             required={true}
+                            className='rounded-lg bg-background'
                         />
                     </div>
-                    <button>Login</button>
+                    <button className='bg-primary hover:bg-accent text-background font-bold py-2 px-4 border border-secondary rounded-md shadow-md'>
+                        Login
+                    </button>
                 </form>
                 <div>
-                    <Link to={"/register"}>Don't have an account?</Link>
+                    <Link to={"/register"} className='hover:text-primary'>
+                        Don't have an account?
+                    </Link>
                 </div>
             </div>
         </div>
     )
-
-
 }
 
 export default LoginStudent
