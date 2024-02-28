@@ -18,6 +18,7 @@ const studentSchema = new mongoose.Schema(
     lessons: [
       {
         type: Schema.Types.ObjectId,
+        ref: "Lesson",
         required: false,
       },
     ],
