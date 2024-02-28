@@ -7,6 +7,7 @@ const LessonContext = createContext();
 axios.defaults.withCredentials = true;
 
 const LessonProvider = ({ children }) => {
+
     const handleCreateLesson = async (lesson) => {
         try {
             response = await axios.post(
