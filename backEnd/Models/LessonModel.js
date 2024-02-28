@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const LessonsSchema = new mongoose.Schema(
   {
+    teacher: {
+      type: String,
+      required: true,
+    },
     subject: {
       type: String,
       required: true,
