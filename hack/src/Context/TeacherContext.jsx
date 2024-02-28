@@ -64,6 +64,7 @@ const TeacherProvider = ({ children }) => {
       await axios.delete(
         `${import.meta.env.VITE_FRONTEND}/teacher/deleteS/${studentId}`
       );
+      navigate("/teacher")
     } catch (err) {
       console.log(err);
     }
