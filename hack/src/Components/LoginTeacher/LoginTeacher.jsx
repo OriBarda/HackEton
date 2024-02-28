@@ -1,19 +1,36 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { TeacherContext } from '../../Context/TeacherContext'
 
-const Login = () => {
+const LoginTeacher = () => {
+    const { handleLogInTeacher } = useContext(TeacherContext)
+
+    const [user, setUser] = useState({
+        username: "",
+        password: "",
+      });
+
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            handleLogInTeacher(user);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div>
             <div>
                 <h1>
-                    Welcome!
+                    Welcome teacher!
                 </h1>
                 <h2>
                     Please login to your account
                 </h2>
             </div>
             <div>
-                <form >
+                <form onSubmit={handleSubmit}>
                     <div>
                         <label >
                             Username:
@@ -21,7 +38,9 @@ const Login = () => {
                         <input
                             type="text"
                             placeholder='Enter Username'
-                            required="true"
+                            value={user.username}
+                            onChange={(e) => setUser({ ...user, username: e.target.value })}
+                            required={true}
                         />
                     </div>
                     <div>
@@ -31,7 +50,9 @@ const Login = () => {
                         <input
                             type="text"
                             placeholder='Enter Password'
-                            required="true"
+                            value={user.password}
+                            onChange={(e) => setUser({ ...user, username: e.target.value })}
+                            required={true}
                         />
                     </div>
                     <button>Login</button>
@@ -44,4 +65,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginTeacher

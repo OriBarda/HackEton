@@ -7,7 +7,7 @@ const StudentContext = createContext();
 axios.defaults.withCredentials = true;
 
 const StudentProvider = ({ children }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [studentInfo, setStudentInfo] = useState();
 
@@ -23,15 +23,15 @@ const StudentProvider = ({ children }) => {
     }
   };
 
-  const handleLogIn = async (student) => {
+  const handleLogInStudent = async (student) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_FRONTEND}/student/login`,
+        `${import.meta.env.VITE_FRONTEND}/student`,
         student
       );
       setStudentInfo(response.data);
-      console.log(response);
-      navigate("/");
+      navigate("/student");
+      console.log("hello world", response);
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ const StudentProvider = ({ children }) => {
     studentInfo,
     setStudentInfo,
     //a
-    handleLogIn,
+    handleLogInStudent,
     handleLogOut,
     getStudents,
   };
