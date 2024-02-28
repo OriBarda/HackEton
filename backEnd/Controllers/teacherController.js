@@ -45,7 +45,6 @@ exports.createStudent = async (req, res) => {
 
 exports.handleLogin = async (req, res) => {
   try {
-    console.log("logged");
     console.log(req.body);
     const { username, password } = req.body;
     const teacher = await Teacher.findOne({ username })
@@ -77,6 +76,7 @@ exports.handleLogin = async (req, res) => {
         students: teacher.students,
         lessons: teacher.lessons,
       });
+      console.log("logged");
     } else {
       res.status(401).json({ message: "Invalid credentials" });
     }
@@ -140,5 +140,5 @@ exports.verifyToken = async (req, res, next) => {
       .exec();
     req.teacher = teacher;
     next();
-  } catch (e) {}
+  } catch (e) { }
 };
