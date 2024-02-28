@@ -22,9 +22,10 @@ const teacherSchema = new mongoose.Schema(
         required: false,
       },
     ],
-    leassons: [
+    lessons: [
       {
         type: Schema.Types.ObjectId,
+        ref: "Lesson",
         required: false,
       },
     ],
