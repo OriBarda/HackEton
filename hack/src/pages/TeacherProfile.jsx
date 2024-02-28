@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import TeacherStudents from '../../Components/TeacherStudents/TeacherStudents'
-import TeacherLessons from '../../Components/TeacherLessons/TeacherLessons'
-import { TeacherContext } from '../../Context/TeacherContext'
+import TeacherStudents from '../Components/TeacherStudents'
+import TeacherLessons from '../Components/TeacherLessons'
+import { TeacherContext } from '../Context/TeacherContext'
 
 const TeacherProfile = () => {
   const { teacherInfo, handleDeleteTeacher } = useContext(TeacherContext);

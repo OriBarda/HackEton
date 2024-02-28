@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import TeacherLayout from "./layouts/TeacherLayout/TeacherLayout";
-import TeacherSchedule from "./pages/TeacherSchedule/TeacherSchedule";
-import TeacherProfile from "./pages/TeacherProfile/TeacherProfile";
-import StudentSchedule from "./pages/StudentSchedule/StudentSchedule";
 import { Route, Routes } from "react-router-dom";
-import StudentLayout from "./layouts/StudentLayout/StudentLayout";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import TeacherLayout from "./layouts/TeacherLayout";
+import TeacherSchedule from "./pages/TeacherSchedule";
+import TeacherProfile from "./pages/TeacherProfile";
+import StudentSchedule from "./pages/StudentSchedule";
+import StudentLayout from "./layouts/StudentLayout";
 
 function App() {
   return (

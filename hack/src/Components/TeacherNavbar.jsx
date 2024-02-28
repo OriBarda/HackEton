@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { TeacherContext } from '../../Context/TeacherContext';
+import { TeacherContext } from '../Context/TeacherContext';
 
 const TeacherNavbar = () => {
   const {teacherInfo, handleLogOutTeacher} = useContext(TeacherContext);
