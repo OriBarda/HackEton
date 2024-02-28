@@ -1,5 +1,6 @@
 const { decode } = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const Student = require("../Models/studentModel");
 
@@ -7,6 +8,24 @@ exports.getStudents = async (req, res) => {
   try {
     const students = await Student.find({});
     res.send(students);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.createStudent = async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    console.log(hashedPassword);
+    const { username, email } = req.body;
+    const role = "student";
+    const newStudent = await Student.create({
+      username,
+      password: hashedPassword,
+      email,
+      role,
+    });
+    res.send(newStudent);
   } catch (err) {
     console.log(err);
   }
@@ -65,18 +84,4 @@ exports.handleLogOut = (req, res) => {
   } catch (err) {
     return res.status(500).send({ message: "Internal Server Error" });
   }
-};
-
-exports.verifyToken = async (req, res, next) => {
-  const token = req.cookies.token;
-  console.log(token);
-  try {
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
-    const student = await Student.findById(decodedToken._id)
-      .populate("lessons")
-      .exec();
-    req.student = student;
-    next();
-  } catch (e) {}
 };

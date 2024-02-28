@@ -38,7 +38,7 @@ const TeacherProvider = ({ children }) => {
   const handleCreateTeacher = async (teacher) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_FRONTEND}/teacher`,
+        `${import.meta.env.VITE_FRONTEND}/teacher/create`,
         teacher
       );
       console.log(response.data);
@@ -46,18 +46,6 @@ const TeacherProvider = ({ children }) => {
       console.log(error);
     }
   }
-
-  const handleCreateStudent = async (student) => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_FRONTEND}/teacher/create`,
-        student
-      );
-      console.log(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleDeleteStudent = async (studentId) => {
     try {
@@ -87,7 +75,6 @@ const TeacherProvider = ({ children }) => {
     handleLogInTeacher,
     handleLogOutTeacher,
     handleCreateTeacher,
-    handleCreateStudent,
     handleDeleteTeacher,
     handleDeleteStudent,
   };

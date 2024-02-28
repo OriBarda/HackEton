@@ -27,7 +27,7 @@ const StudentSchedule = () => {
     { start: "13:15", end: "14:00" },
     { start: "14:15", end: "15:00" },
   ];
-
+    
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="max-w-screen-xl mx-auto p-8 bg-white shadow-lg rounded-lg">
