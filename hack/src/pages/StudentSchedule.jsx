@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StudentContext } from "../../Context/StudentContext";
+import { StudentContext } from "../Context/StudentContext";
 
 const StudentSchedule = () => {
   const { studentInfo } = useContext(StudentContext);
