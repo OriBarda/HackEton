@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const StudentContext = createContext();
@@ -10,6 +10,10 @@ const StudentProvider = ({ children }) => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [studentInfo, setStudentInfo] = useState();
+
+  useEffect(() => {
+    console.log("Updated Student Info:", studentInfo);
+  }, [studentInfo]);
 
   const getStudents = async () => {
     try {
@@ -23,17 +27,34 @@ const StudentProvider = ({ children }) => {
     }
   };
 
+  const handleCreateStudent = async (student) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_FRONTEND}/student/create`,
+        student
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleLogInStudent = async (student) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_FRONTEND}/student`,
+        `${import.meta.env.VITE_FRONTEND}/student/login`,
         student
       );
+
+      console.log("Response Data:", response.data);
+
       setStudentInfo(response.data);
+
+      console.log("Updated Student Info:", studentInfo);
+
       navigate("/student/schedule");
-      console.log("hello world", response);
     } catch (err) {
-      console.log(err);
+      console.log("Error:", err);
     }
   };
 
@@ -56,6 +77,7 @@ const StudentProvider = ({ children }) => {
     setStudentInfo,
     //a
     handleLogInStudent,
+    handleCreateStudent,
     handleLogOutStudent,
     getStudents,
   };

@@ -7,8 +7,30 @@ import TeacherSchedule from "./pages/TeacherSchedule";
 import TeacherProfile from "./pages/TeacherProfile";
 import StudentSchedule from "./pages/StudentSchedule";
 import StudentLayout from "./layouts/StudentLayout";
+import { TeacherContext } from "./Context/TeacherContext";
+import axios from "axios";
+import { StudentContext } from "./Context/StudentContext";
 
 function App() {
+  const { setTeacherInfo, teacherInfo } = useContext(TeacherContext);
+  const { setStudentInfo, studentInfo } = useContext(StudentContext);
+
+  useEffect(
+    () => {
+      axios
+        .get(`${import.meta.env.VITE_FRONTEND}/teacher/authenticate`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log("this is res.data", res.data);
+          setStudentInfo(res.data);
+          setTeacherInfo(res.data);
+        })
+    },
+    [],
+    [teacherInfo, studentInfo]
+  );
+
   return (
     <>
       <Routes>
