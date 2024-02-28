@@ -15,21 +15,19 @@ const teacherSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: { type: String, required: true },
     students: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Excercise",
         required: false,
       },
     ],
-    lessons: [
+    leassons: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Class",
         required: false,
       },
     ],
-    role: { type: String, required: true },
   },
   {
     timestamps: true,

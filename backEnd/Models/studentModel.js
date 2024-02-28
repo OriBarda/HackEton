@@ -15,10 +15,9 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    lessons: [
+    leassons: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Class",
         required: false,
       },
     ],
