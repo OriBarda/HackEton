@@ -1,6 +1,6 @@
 import React from 'react'
-import LoginTeacher from '../../Components/LoginTeacher/LoginTeacher'
-import LoginStudent from '../../Components/LoginStudent/LoginStudent'
+import LoginTeacher from '../Components/LoginTeacher'
+import LoginStudent from '../Components/LoginStudent'
 
 const LoginPage = () => {
   return (
