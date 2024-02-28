@@ -1,54 +1,54 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { TeacherContext } from '../../Context/TeacherContext';
 
 const Register = () => {
-
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [passwordsMatch, setPasswordsMatch] = useState(false);
-
-  const [passkey, setPasskey] = useState();
-  const [role, setRole] = useState();
   const navigate = useNavigate()
 
+  const { handleCreateTeacher, handleCreateStudent } = useContext(TeacherContext)
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    checkPasswords();
-  }
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    checkPasswords();
-  }
-  const checkPasswords = () => {
-    if (password === confirmPassword) {
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [passkey, setPasskey] = useState();
+
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
+
+
+  const checkPasswords = async () => {
+    if (String(user.password) === String(confirmPassword)) {
       setPasswordsMatch(true);
     } else {
       setPasswordsMatch(false);
     }
   };
 
-  const handlePasskeyChange = (e) => {
+  const handlePasskeyChange = async (e) => {
     setPasskey(e.target.value);
-    checkPasskey();
   }
-  const checkPasskey = () => {
-    if (passkey === 1234) {
-      setRole("teacher");
-    } else if (passkey === 5678) {
-      setRole("student");
+
+  const checkPasskey = async () => {
+    if (passkey === "1234") {
+      handleCreateTeacher(user);
+    } else if (passkey === "5678") {
+      handleCreateStudent(user);
+    } else {
+      alert("Wrong passkey");
     }
   }
 
-
-
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await checkPasswords();
     if (!passwordsMatch) {
-      //popup passwords dont match
+      alert("Passwords dont match")
     } else {
-      // log the input in the db
-      navigate("/")
+      checkPasskey();
+      navigate("/");
     }
   }
 
@@ -67,8 +67,10 @@ const Register = () => {
             </label>
             <input
               type="text"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
               placeholder='Enter Username'
-              required="true"
+              required={true}
             />
           </div>
           <div>
@@ -78,10 +80,11 @@ const Register = () => {
             <input
               type="password"
               placeholder='Enter Password'
-              value={password}
-              onChange={handlePasswordChange}
-              required="true"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              required={true}
             />
+
           </div>
           <div>
             <label>Confirm password:</label>
@@ -89,8 +92,8 @@ const Register = () => {
               type="password"
               placeholder='Confirm Password'
               value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              required="true"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required={true}
             />
           </div>
           <div>
@@ -100,8 +103,11 @@ const Register = () => {
             <input
               type="email"
               placeholder='Enter Email'
-              required="true"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              required={true}
             />
+
           </div>
           <div>
             <label>
@@ -110,14 +116,17 @@ const Register = () => {
             <input
               type="text"
               placeholder='Enter Key'
-              onChange={handle}
-              required="true"
+              onChange={handlePasskeyChange}
+              required={true}
             />
           </div>
           <div>
             <button type="submit">Register Account</button>
           </div>
         </form>
+        <div>
+          <Link to="/">Go back</Link>
+        </div>
       </div>
     </div>
   )

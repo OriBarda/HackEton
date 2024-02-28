@@ -1,20 +1,24 @@
 import axios from "axios";
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TeacherContext = createContext();
 
 axios.defaults.withCredentials = true;
 
 const TeacherProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [teacherInfo, setTeacherInfo] = useState();
 
-  const handleLogIn = async (teacher) => {
+  const handleLogInTeacher = async (teacher) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_FRONTEND}/teacher/login`,
         teacher
       );
       setTeacherInfo(response.data);
+      console.log(response);
+      navigate("/teacher")
     } catch (err) {
       console.log(err);
     }
@@ -29,6 +33,18 @@ const TeacherProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const handleCreateTeacher = async (teacher) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_FRONTEND}/teacher`,
+        teacher
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleCreateStudent = async (student) => {
     try {
@@ -67,8 +83,9 @@ const TeacherProvider = ({ children }) => {
     teacherInfo,
     setTeacherInfo,
     //a
-    handleLogIn,
+    handleLogInTeacher,
     handleLogOut,
+    handleCreateTeacher,
     handleCreateStudent,
     handleDeleteTeacher,
     handleDeleteStudent,

@@ -1,10 +1,12 @@
 import React from 'react'
-import Login from '../../Components/login/Login'
+import LoginTeacher from '../../Components/LoginTeacher/LoginTeacher'
+import LoginStudent from '../../Components/LoginStudent/LoginStudent'
 
 const LoginPage = () => {
   return (
     <div>
-        <Login/>
+        <LoginTeacher/>
+        <LoginStudent/>
     </div>
   )
 }
