@@ -18,7 +18,7 @@ const TeacherProvider = ({ children }) => {
       );
       setTeacherInfo(response.data);
       console.log(response);
-      navigate("/teacher")
+      navigate("/teacher/schedule")
     } catch (err) {
       console.log(err);
     }
@@ -52,6 +52,7 @@ const TeacherProvider = ({ children }) => {
       await axios.delete(
         `${import.meta.env.VITE_FRONTEND}/teacher/deleteS/${studentId}`
       );
+      navigate("/teacher/schedule")
     } catch (err) {
       console.log(err);
     }
