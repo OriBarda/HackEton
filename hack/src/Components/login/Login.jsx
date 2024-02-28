@@ -18,13 +18,21 @@ const Login = () => {
                         <label >
                             Username:
                         </label>
-                        <input type="text" placeholder='Enter Username' />
+                        <input
+                            type="text"
+                            placeholder='Enter Username'
+                            required="true"
+                        />
                     </div>
                     <div>
                         <label >
                             Password:
                         </label>
-                        <input type="text" placeholder='Enter Password' />
+                        <input
+                            type="text"
+                            placeholder='Enter Password'
+                            required="true"
+                        />
                     </div>
                     <button>Login</button>
                 </form>
