@@ -1,25 +1,25 @@
-import React, { useContext } from 'react';
-import { StudentContext } from '../Context/StudentContext';
+import React, { useContext } from "react";
+import { StudentContext } from "../Context/StudentContext";
 
 const StudentNavbar = () => {
-  const {studentInfo, handleLogOutStudent } = useContext(StudentContext)
+  const { studentInfo, handleLogOutStudent } = useContext(StudentContext);
 
   const handleClickLogout = async () => {
     await handleLogOutStudent();
-  }
+  };
 
   return (
-    <div className='h-24 space-x-96 bg-gradient-to-b from-secondary border-solid border-2 p-4 rounded-xl flex-row flex items-center justify-center content-center'>
-      <div className='flex flex-col space-y-10 items-center justify-center content-center'>
-        <h1 className='text-5xl'>Hello {studentInfo.username}</h1>
+    <div className="bg-gray-900 p-4 px-8 flex items-center justify-between shadow-lg">
+      <div className="text-white">
+        <h1 className="text-2xl font-bold">Welcome, {studentInfo.username}!</h1>
+        {/* Add more user details or navigation links if needed */}
       </div>
-      <div>
-        <button
-          onClick={handleClickLogout}
-          className='bg-primary hover:bg-accent text-background font-bold py-2 px-4 border border-secondary rounded-md shadow-md'>
-          Log out
-        </button>
-      </div>
+      <button
+        onClick={handleClickLogout}
+        className="bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 px-4 rounded-md transition-all ease-in-out"
+      >
+        Log out
+      </button>
     </div>
   );
 };

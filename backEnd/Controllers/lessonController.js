@@ -27,8 +27,18 @@ exports.createLesson = async (req, res) => {
 exports.editLesson = async (req, res) => {
   try {
     const lessonId = req.body._id;
-    const { subject, start, end, place, students, teacherId } = req.body;
-    const updatedLesson = { subject, start, end, place, students, teacherId };
+    console.log(lessonId);
+    const { teacher, subject, day, hour, place, students, teacherId } =
+      req.body;
+    const updatedLesson = {
+      teacher,
+      subject,
+      day,
+      hour,
+      place,
+      students,
+      teacherId,
+    };
     const lesson = await Lesson.findByIdAndUpdate(
       { _id: lessonId },
       updatedLesson,
@@ -43,14 +53,30 @@ exports.editLesson = async (req, res) => {
 exports.deleteLesson = async (req, res) => {
   try {
     const lessonId = req.body.lessonId;
+
     const lessonToDelete = await Lesson.findByIdAndDelete(lessonId);
+
+    const students = await Promise.all(
+      lessonToDelete.students.map(async (studentId) => {
+        const student = await Student.findById(studentId);
+        student.lessons = student.lessons.filter(
+          (lesson) => lesson.toString() !== lessonId
+        );
+        return student.save();
+      })
+    );
+
     const teacher = await Teacher.findById(lessonToDelete.teacherId);
     teacher.lessons = teacher.lessons.filter(
       (lesson) => lesson.toString() !== lessonId
     );
+
+    await Promise.all(students);
     await teacher.save();
+
     res.send("Lesson deleted successfully");
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
 };
