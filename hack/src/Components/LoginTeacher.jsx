@@ -1,74 +1,94 @@
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { TeacherContext } from '../Context/TeacherContext'
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { FaUser, FaLock } from "react-icons/fa";
+import { TeacherContext } from "../Context/TeacherContext";
 
 const LoginTeacher = () => {
-    const { handleLogInTeacher } = useContext(TeacherContext)
+  const { handleLogInTeacher } = useContext(TeacherContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-      });
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            handleLogInTeacher(user);
-        } catch (error) {
-            console.log(error);
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user.username || !user.password) {
+      setError("Please enter both username and password");
+      return;
     }
+    setLoading(true);
+    try {
+      await handleLogInTeacher(user);
+    } catch (error) {
+      setError("Invalid username or password");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <div className='h-full space-y-28 bg-gradient-to-b from-secondary border-solid border-2 p-4 rounded-xl flex-col flex items-center justify-center content-center'>
-            <div className='flex flex-col space-y-10 items-center justify-center content-center '>
-                <h1 className='text-6xl '>
-                    Welcome teacher!
-                </h1>
-                <h1 className='text-3xl '>
-                    Please login to your account
-                </h1>
+  return (
+    <div className="w-fit h-fit p-12 rounded-lg bg-gray-800 text-white flex flex-col items-center justify-evenly">
+      <form onSubmit={(e) => handleSubmit(e)} className=" my-4">
+        <header className="w-full text-center uppercase font-bold text-3xl">
+          Teacher
+        </header>
+        <div className="flex flex-col items-start">
+          <label className="w-full pb-6 flex flex-col items-start font-bold text-lg">
+            <header className="flex items-baseline">
+              <FaUser className="mr-2" /> Username:
+            </header>
+            <input
+              className="bg-white bg-opacity-10 rounded-full px-3 py-2 focus:border-b-indigo-700 focus:border-b-2 ring-0 outline-none"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              placeholder="Username"
+              type="text"
+            />
+          </label>
+          <label className="w-full pb-6 flex flex-col items-start font-bold text-lg">
+            <header className="flex items-baseline">
+              {" "}
+              <FaLock className="mr-2" /> Password:
+            </header>
+            <div className="relative">
+              <input
+                className="bg-white bg-opacity-10 rounded-full px-3 py-2 focus:border-b-indigo-700 focus:border-b-2 ring-0 outline-none"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </span>
             </div>
-            <div className='flex justify-center items-center content-center flex-col space-y-16'>
-                <form onSubmit={handleSubmit} className='flex justify-center items-center content-center flex-col space-y-10'>
-                    <div>
-                        <label >
-                            Username:
-                        </label>
-                        <input
-                            type="text"
-                            placeholder='Enter Username'
-                            value={user.username}
-                            onChange={(e) => setUser({ ...user, username: e.target.value })}
-                            required={true}
-                            className='rounded-lg bg-background'
-                        />
-                    </div>
-                    <div>
-                        <label >
-                            Password:
-                        </label>
-                        <input
-                            type="text"
-                            placeholder='Enter Password'
-                            value={user.password}
-                            onChange={(e) => setUser({ ...user, password: e.target.value })}
-                            required={true}
-                            className='rounded-lg bg-background'
-                        />
-                    </div>
-                    <button className='bg-primary hover:bg-accent text-background font-bold py-2 px-4 border border-secondary rounded-md shadow-md'>
-                        Login
-                    </button>
-                </form>
-                <div>
-                    <Link to={"/register"} className='hover:text-primary'>
-                        Don't have an account?
-                    </Link>
-                </div>
-            </div>
+          </label>
         </div>
-    )
-}
+        {error && <div className="text-red-500">{error}</div>}
+        <button
+          type="submit"
+          className="w-full bg-gray-700 h-12 font-bold tracking-wide text-lg rounded-full hover:bg-gray-900 transition-all ease-in-out duration-700"
+          disabled={loading}
+        >
+          {loading ? "Logging In..." : "Log In As Teacher"}
+        </button>
+      </form>
+      <div>
+        Don't have an account?{" "}
+        <Link to={"/signup"} className="underline">
+          Sign Up
+        </Link>
+      </div>
+    </div>
+  );
+};
 
-export default LoginTeacher
+export default LoginTeacher;

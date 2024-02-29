@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./Components/Register";
 import TeacherLayout from "./layouts/TeacherLayout";
 import TeacherSchedule from "./pages/TeacherSchedule";
 import TeacherProfile from "./pages/TeacherProfile";
@@ -25,7 +25,7 @@ function App() {
           console.log("this is res.data", res.data);
           setStudentInfo(res.data);
           setTeacherInfo(res.data);
-        })
+        });
     },
     [],
     [teacherInfo, studentInfo]
