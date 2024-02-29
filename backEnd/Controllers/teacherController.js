@@ -125,7 +125,48 @@ exports.verifyToken = async (req, res, next) => {
       .populate("lessons")
       .exec();
     req.teacher = teacher;
-    console.log("req.teacher",req.student);
+    console.log("req.teacher", req.student);
     next();
-  } catch (e) { }
+  } catch (e) {
+    return res.status(401).json({
+      status: "failed",
+      message: "unauthorized"
+    })
+  }
 };
+
+exports.addStudent = async (req, res) => {
+  try {
+    const teacherId = req.body.teacher._id;
+    const studentIds = req.body.studentIds;
+    const teacher = await Teacher.findById(teacherId);
+    if (!teacher) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Teacher not found"
+      })
+    }
+    for (const studentId of studentIds) {
+      const student = await Student.findById(studentId);
+      if (student) {
+        teacher.students.push(student)
+      } else {
+        return res.status(404).json({
+          status: "failed",
+          message: `student with ID ${studentId} not found`
+        })
+      }
+    }
+    await teacher.save();
+    res.status(200).json({
+      status: "Success",
+      message: "students added successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "failed",
+      message: "Internal Server Error"
+    })
+  }
+}
