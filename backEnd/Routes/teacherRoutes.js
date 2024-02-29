@@ -8,5 +8,6 @@ newRoute.route("/logout").post(teacherController.handleLogOut);
 newRoute.route("/deleteT/:id").delete(teacherController.deleteTeacher);
 newRoute.route("/deleteS/:id").delete(teacherController.deleteStudent);
 newRoute.route("/authenticate").get(teacherController.verifyToken);
+newRoute.route("/addStudent").post(teacherController.addStudent);
 
 module.exports = newRoute;

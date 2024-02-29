@@ -24,4 +24,5 @@ app.use(teacherController.verifyToken);
 app.use("/teacher", teacherRoutes);
 app.use("/student", studentRoutes);
 app.use("/lesson", lessonRoutes);
+
 module.exports = app;
