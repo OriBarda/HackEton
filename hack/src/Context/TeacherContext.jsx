@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TeacherContext = createContext();
@@ -68,6 +68,17 @@ const TeacherProvider = ({ children }) => {
     }
   };
 
+  const handleAddStudentToTeacher = async () => {
+    try {
+      await axios.post(`${import.meta.env.VITE_FRONTEND}/teacher/addStudent`, { studentIds: selectedStudents });
+      alert('Students added successfully');
+      getStudents();
+    } catch (error) {
+      console.log(error);
+      alert('Failed to add students');
+    }
+  };
+
   const contextValues = {
     //v
     teacherInfo,
@@ -78,6 +89,7 @@ const TeacherProvider = ({ children }) => {
     handleCreateTeacher,
     handleDeleteTeacher,
     handleDeleteStudent,
+    handleAddStudentToTeacher,
   };
 
   return (
